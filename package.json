@@ -1,0 +1,31 @@
+{
+  "name": "cfp-github-importer",
+  "version": "0.0.0",
+  "description": "Import a CFP into Github issues for review.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EmpireJS/cfp-github-importer"
+  },
+  "keywords": [
+    "community",
+    "conference",
+    "cfp",
+    "github"
+  ],
+  "author": "Charlie Robbins <charlie.robbins@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EmpireJS/cfp-github-importer/issues"
+  },
+  "bin": "bin/import",
+  "homepage": "https://github.com/EmpireJS/cfp-github-importer",
+  "dependencies": {
+    "optimist": "~0.6.1",
+    "github": "~0.1.14",
+    "async": "~0.2.10"
+  }
+}

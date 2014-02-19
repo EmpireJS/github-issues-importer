@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+
+var importer = require('../index');
+
+var optimist = require('optimist')
+  .option('auth', {
+    description: 'Github authentication to use (e.g. "user:pass")',
+    alias: 'a',
+    demand: true
+  })
+  .option('repo', {
+    description: 'Github repository to import into (e.g. "empirejs/2014-cfp")',
+    alias: 'r',
+    demand: true
+  })
+  .option('file', {
+    description: 'Tab-separated file to parse from',
+    alias: 'f',
+    demand: true
+  })
+  .option('help', {
+    description: 'Display this message',
+    alias: 'h'
+  });
+
+var argv = optimist.argv;
+if (argv.help) {
+  return optimist.showHelp();
+}
+
+importer(argv, function (err) {
+  if (err) { console.dir(err) }
+  console.log('Done importing CFP into Github issues');
+});
