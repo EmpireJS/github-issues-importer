@@ -1,7 +1,7 @@
 /*
  * index.js: Import a CFP into Github issues for review.
  *
- * (C) 2013, Nodejitsu Inc.
+ * (C) 2013, EmpireJS.
  *
  */
 
