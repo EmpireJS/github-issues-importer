@@ -18,7 +18,13 @@ var fs = require('fs'),
 //   - @file {string} Path to a *.tsv file matching
 //
 var importer = module.exports = function (options, callback) {
-  var auth = options.auth.split(':');
+  var auth = options.auth.split(':'),
+      parser;
+
+  if (options.parser) {
+    try { parser = require(require.resolve(options.parser)); }
+    catch (ex) { return callback(ex) }
+  }
 
   //
   // Setup basic Github client and template file
@@ -43,7 +49,7 @@ var importer = module.exports = function (options, callback) {
     //
     function parseAndRead(next) {
       async.parallel({
-        proposals: async.apply(importer.parse, options.file),
+        proposals: async.apply(importer.parse, options.file, parser),
         template:  async.apply(fs.readFile, options.template, 'utf8'),
         issues:    async.apply(importer.readIssues, options)
       }, next);
@@ -126,7 +132,26 @@ importer.readIssues = function (options, callback) {
 // ### function parse (file, callback)
 // Parses the *.tsv file. Quite a brittle setup at the moment
 //
-importer.parse = function parse(file, callback) {
+importer.parse = function parse(file, parser, callback) {
+  if ((typeof parser === 'function' && !callback)) {
+    callback = parser;
+    parser = null;
+  }
+
+  parser = parser || function (parts) {
+    return {
+      'author': [
+        parts[1],
+        parts[2],
+        parts[3]
+      ].filter(Boolean).join('\n'),
+      'title': parts[4],
+      'description': parts[5],
+      'audience': parts[6],
+      'anything-else': parts[7] || ''
+    };
+  };
+
   console.log('Parsing | %s', file);
   fs.readFile(file, 'utf8', function (err, lines) {
     if (err) { return callback(err) }
@@ -138,17 +163,7 @@ importer.parse = function parse(file, callback) {
         //
         // TODO: This is very brittle.
         //
-        return {
-          'author': [
-            parts[1],
-            parts[2],
-            parts[3]
-          ].filter(Boolean).join('\n'),
-          'title': parts[4],
-          'description': parts[5],
-          'audience': parts[6],
-          'anything-else': parts[7] || ''
-        }
+        return parser(parts);
       });
 
     callback(null, proposals);

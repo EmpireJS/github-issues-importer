@@ -24,12 +24,55 @@ Creating | THAT MEANS THIS IS IDEMPOTENT
 
 _n.b. the script is designed to be idempotent so you can run it multiple times and everything will be fine._
 
-## Format
+## Parsing and Format
 
-Right now this is the brittle part about this, but it assumes the [CFP format used by EmpireJS 2014][empirejs-cfp-2014]:
+This was originally designed (and defaults to) the [CFP format used by EmpireJS 2014][empirejs-cfp-2014]:
 
 | Date | Name | Email | Twitter | Title | Description | Difficulty (1-5) | Anything Else? |
 |:----:|:----:|:-----:|:-------:|:-----:|:-----------:|:----------------:|:--------------:|
+
+If you would like to use a custom CFP format and template that's easy! Just use the following options:
+
+```
+  cfp-github-importer -t ./path/to/template.md -p ./path/to/parser.js
+```
+
+Where the `parser.js` would look something like:
+
+``` js
+module.exports = function (columns) {
+  return {
+    'author': [
+      parts[1],
+      parts[2],
+      parts[3]
+    ].filter(Boolean).join('\n'),
+    'title': parts[4],
+    'description': parts[5],
+    'audience': parts[6],
+    'anything-else': parts[7] || ''
+  }
+};
+```
+
+The above matches the default which has a corresponding `issue.md` template under `/templates`:
+
+```
+```
+<author>
+```
+
+### What's your Ideal Audience? <audience>
+_Beginner (1) to Advanced (5)_
+
+## Tell Us More
+
+<description>
+
+## Questions/Comments/You Oughta Know/Anything else? Feel free to put the kitchen sink in here.
+
+<anything-else>
+```
 
 #### LICENSE: MIT
 

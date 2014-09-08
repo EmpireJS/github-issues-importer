@@ -13,6 +13,16 @@ var optimist = require('optimist')
     alias: 'r',
     demand: true
   })
+  .option('template', {
+    description: 'Issue template to use for Github import',
+    alias: 't',
+    string: true
+  })
+  .option('parser', {
+    description: 'File which exports a single function for parsing',
+    alias: 'p',
+    string: true
+  })
   .option('file', {
     description: 'Tab-separated file to parse from',
     alias: 'f',
