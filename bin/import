@@ -28,6 +28,11 @@ var optimist = require('optimist')
     alias: 'f',
     demand: true
   })
+  .option('debug', {
+    description: 'If set, dumps all output to {pwd}/debug.md instead of Github',
+    alias: 'd',
+    boolean: true
+  })
   .option('help', {
     description: 'Display this message',
     alias: 'h'

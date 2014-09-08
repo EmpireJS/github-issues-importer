@@ -69,6 +69,10 @@ var importer = module.exports = function (options, callback) {
         return all
       }, {});
 
+      if (options.debug) {
+        return importer.debug(options, proposals, callback);
+      }
+
       async.forEachLimit(
         proposals.filter(function (p) {
           if (names[p.title]) {
@@ -95,12 +99,7 @@ var importer = module.exports = function (options, callback) {
 importer.addIssue = function (options, proposal, callback) {
   var github   = options.github,
       repo     = options.repo.split('/'),
-      rendered = options.template;
-
-  Object.keys(proposal)
-    .forEach(function (key) {
-      rendered = rendered.replace('<' + key + '>', proposal[key]);
-    });
+      rendered = importer.template(options, proposal);
 
   console.log('Creating | %s', proposal.title);
   github.issues.create({
@@ -110,6 +109,40 @@ importer.addIssue = function (options, proposal, callback) {
     body: rendered,
     labels: []
   }, callback);
+};
+
+//
+// ### function template (options, proposal)
+// Templates the given `proposal` with the specified `options`.
+//
+importer.template = function (options, proposal) {
+  var rendered = options.template;
+
+  Object.keys(proposal)
+    .forEach(function (key) {
+      if (key === 'description') {
+        console.dir(proposal[key]);
+      }
+
+      rendered = rendered.replace('<' + key + '>', proposal[key]);
+    });
+
+  return rendered;
+};
+
+//
+// ### function debugIssue (options, proposals, callback)
+// Debugs the rendered issue by saving it to `{pwd}/debug.md`
+//
+importer.debug = function (options, proposals, callback) {
+  fs.writeFile(
+    path.join(process.cwd(), 'debug.md'),
+    proposals.map(function (proposal) {
+      return importer.template(options, proposal);
+    }).join('\n\n\n'),
+    'utf8',
+    callback
+  );
 };
 
 //
