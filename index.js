@@ -216,7 +216,6 @@ importer.parsers = {
     catch (ex) { return callback(ex); }
 
     callback(null, rows.map(function (row) {
-      console.dir(row.length);
       return parser(row);
     }));
   }
