@@ -58,9 +58,7 @@ module.exports = function (columns) {
 The above matches the default which has a corresponding `issue.md` template under `/templates`:
 
 ```
-```
 <author>
-```
 
 ### What's your Ideal Audience? <audience>
 _Beginner (1) to Advanced (5)_
