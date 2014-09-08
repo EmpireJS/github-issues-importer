@@ -8,7 +8,7 @@ module.exports = function parser(columns) {
     title: columns[6],
     audience: columns[7],
     description: columns[11],
-    'kitchen-sink': columns[10],
+    'kitchen-sink': columns[10] || 'No response from applicant',
     author: columns[1],
     email: columns[2],
     twitter: columns[3],
