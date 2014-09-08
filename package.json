@@ -1,6 +1,6 @@
 {
   "name": "cfp-github-importer",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Import a CFP into Github issues for review.",
   "main": "index.js",
   "scripts": {
