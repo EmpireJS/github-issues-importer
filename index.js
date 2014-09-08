@@ -8,6 +8,7 @@
 var fs = require('fs'),
     path = require('path'),
     async = require('async'),
+    xlsxRows = require('xlsx-rows'),
     GitHubApi = require('github');
 
 //
@@ -120,10 +121,6 @@ importer.template = function (options, proposal) {
 
   Object.keys(proposal)
     .forEach(function (key) {
-      if (key === 'description') {
-        console.dir(proposal[key]);
-      }
-
       rendered = rendered.replace('<' + key + '>', proposal[key]);
     });
 
@@ -171,6 +168,11 @@ importer.parse = function parse(file, parser, callback) {
     parser = null;
   }
 
+  var ext = path.extname(file);
+  if (!importer.parsers[ext]) {
+    return callback(new Error('Cannot parse ' + ext + ' files'));
+  }
+
   parser = parser || function (parts) {
     return {
       'author': [
@@ -186,19 +188,36 @@ importer.parse = function parse(file, parser, callback) {
   };
 
   console.log('Parsing | %s', file);
-  fs.readFile(file, 'utf8', function (err, lines) {
-    if (err) { return callback(err) }
-
-    var proposals = lines.split('\n')
-      .map(function (line) {
-        var parts = line.split('\t');
-
-        //
-        // TODO: This is very brittle.
-        //
-        return parser(parts);
-      });
-
-    callback(null, proposals);
-  });
+  importer.parsers[ext](file, parser, callback);
 };
+
+importer.parsers = {
+  '.tsv': function tsv(file, parser, callback) {
+    fs.readFile(file, 'utf8', function (err, lines) {
+      if (err) { return callback(err) }
+
+      var proposals = lines.split('\n')
+        .map(function (line) {
+          var parts = line.split('\t');
+
+          //
+          // TODO: This is very brittle.
+          //
+          return parser(parts);
+        });
+
+      callback(null, proposals);
+    });
+  },
+  '.xlsx': function xlsxp(file, parser, callback) {
+    var rows;
+
+    try { rows = xlsxRows(file); }
+    catch (ex) { return callback(ex); }
+
+    callback(null, rows.map(function (row) {
+      console.dir(row.length);
+      return parser(row);
+    }));
+  }
+}
