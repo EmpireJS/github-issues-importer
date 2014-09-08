@@ -8,6 +8,8 @@ Lots of things are great to do in public. Submitting CFPs isn't one of them. **W
 
 Having all your CFP submissions be Github issues, however, **is awesome.** It's just a huge pain to import them. Wait? This thing does that for me you say? Well WHY DIDN'T YOU TELL ME THAT!
 
+It is designed to be used with a simple Google Form submission used by such awesome conferences as [JSConf](http://jsconf.us) and [JSConf.eu](http://2014.jsconf.eu/call-for-speakers/)
+
 ## Usage
 
 ```
@@ -23,6 +25,17 @@ Creating | THAT MEANS THIS IS IDEMPOTENT
 ```
 
 _n.b. the script is designed to be idempotent so you can run it multiple times and everything will be fine._
+
+## Handling Newlines in Large Text Fields
+
+So hey, you know what's fun? Preserving formatting! It turns out that formats like `*.tsv` (tab-separated values) do not play nice with new lines within individual entries. So that means if you export to `*.tsv` from something like say Google Forms then it won't work.
+
+**But wait! There's a fix!** All you have to do is export to an `*.xlsx` file and use that with the `cfp-github-importer`!
+
+```
+cfp-github-importer --file ./cfp-responses.xlsx --auth 'user:pass' --repo 'my-conf/cfp-review-2014'
+Parsing | ./cfp-responses.xlsx
+```
 
 ## Parsing and Format
 
