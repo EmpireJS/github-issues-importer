@@ -24,8 +24,9 @@
   "bin": "bin/import",
   "homepage": "https://github.com/EmpireJS/cfp-github-importer",
   "dependencies": {
-    "optimist": "~0.6.1",
+    "async": "~0.2.10",
     "github": "~0.1.14",
-    "async": "~0.2.10"
+    "optimist": "~0.6.1",
+    "xlsx-rows": "~1.0.0"
   }
 }
