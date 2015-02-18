@@ -23,7 +23,7 @@ var importer = module.exports = function (options, callback) {
       parser;
 
   if (options.parser) {
-    try { parser = require(require.resolve(options.parser)); }
+    try { parser = require(path.resolve(options.parser)); }
     catch (ex) { return callback(ex) }
   }
 
