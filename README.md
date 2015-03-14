@@ -1,6 +1,6 @@
-# cfp-github-importer
+# github-issues-importer
 
-Import a CFP into Github issues for review.
+Import Github issues from various sources (CSV, Excel, etc.)
 
 ## Why!?
 
@@ -13,8 +13,8 @@ It is designed to be used with a simple Google Form submission used by such awes
 ## Usage
 
 ```
-npm install cfp-github-importer -g
-cfp-github-importer --file ./cfp-responses.tsv --auth 'user:pass' --repo 'my-conf/cfp-review-2014'
+npm install import-github-issues -g
+import-github-issues --file ./cfp-responses.tsv --auth 'user:pass' --repo 'my-conf/cfp-review-2014'
 Parsing | ./cfp-responses.tsv
 Reading issues | my-conf/cfp-review-2014
 Already exists | ZOMG JAVASCRIPT
@@ -33,7 +33,7 @@ So hey, you know what's fun? Preserving formatting! It turns out that formats li
 **But wait! There's a fix!** All you have to do is export to an `*.xlsx` file and use that with the `cfp-github-importer`!
 
 ```
-cfp-github-importer --file ./cfp-responses.xlsx --auth 'user:pass' --repo 'my-conf/cfp-review-2014'
+import-github-issues --file ./cfp-responses.xlsx --auth 'user:pass' --repo 'my-conf/cfp-review-2014'
 Parsing | ./cfp-responses.xlsx
 ```
 
@@ -47,7 +47,7 @@ This was originally designed (and defaults to) the [CFP format used by EmpireJS 
 If you would like to use a custom CFP format and template that's easy! Just use the following options:
 
 ```
-  cfp-github-importer -t ./path/to/template.md -p ./path/to/parser.js
+  import-github-issues -t ./path/to/template.md -p ./path/to/parser.js
 ```
 
 Where the `parser.js` would look something like:

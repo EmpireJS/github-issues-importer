@@ -45,5 +45,5 @@ if (argv.help) {
 
 importer(argv, function (err) {
   if (err) { console.dir(err) }
-  console.log('Done importing CFP into Github issues');
+  console.log('Done importing into Github issues');
 });

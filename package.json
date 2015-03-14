@@ -1,14 +1,14 @@
 {
-  "name": "cfp-github-importer",
+  "name": "github-issues-importer",
   "version": "2.0.1",
-  "description": "Import a CFP into Github issues for review.",
+  "description": "Import Github issues from various sources (CSV, Excel, etc.)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests\""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/EmpireJS/cfp-github-importer"
+    "url": "https://github.com/empirejs/github-issues-importer"
   },
   "keywords": [
     "community",
@@ -19,10 +19,12 @@
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/EmpireJS/cfp-github-importer/issues"
+    "url": "https://github.com/empirejs/github-issues-importer/issues"
   },
-  "bin": "bin/import",
-  "homepage": "https://github.com/EmpireJS/cfp-github-importer",
+  "bin": {
+    "import-github-issues": "bin/import"
+  },
+  "homepage": "https://github.com/empirejs/github-issues-importer",
   "dependencies": {
     "async": "~0.2.10",
     "github": "~0.1.14",

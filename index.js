@@ -1,5 +1,5 @@
 /*
- * index.js: Import a CFP into Github issues for review.
+ * index.js: Import a file (CSV, Excel) into Github issues.
  *
  * (C) 2013, EmpireJS.
  *
@@ -12,7 +12,7 @@ var fs = require('fs'),
     GitHubApi = require('github');
 
 //
-// ### function cfp-github-importer (options, callback)
+// ### function github-issues-importer (options, callback)
 // #### @options {Object} Options for the import
 //   - @auth {Object} Github Auth
 //   - @repo {string} Fully qualified repo name (e.g. empirejs/2014-cfp)
@@ -219,4 +219,4 @@ importer.parsers = {
       return parser(row);
     }));
   }
-}
+};
